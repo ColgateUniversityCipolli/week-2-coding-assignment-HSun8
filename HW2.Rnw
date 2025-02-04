@@ -68,7 +68,7 @@ mid.points <- (left.points+right.points)/2
   \item Write code that computes the area using the Trapezoidial Rule.\\
   \textbf{Solution:}
 <<size="scriptsize", warning=FALSE, message=FALSE>>=
-# Write code for answer here.
+trapezoidal.area = 0.5 * (right.area + left.area)
 @
   \item Write a function that takes \texttt{a}, \texttt{b}, and number of 
   rectangles (\texttt{n.rect}) in as input and returns the Trapezoidial Rule 
@@ -76,7 +76,7 @@ mid.points <- (left.points+right.points)/2
   skeleton below. When you are done, remove \texttt{eval=FALSE} to show that
   the function provides the expected result for the example above.\\
   \textbf{Solution:}
-<<eval=FALSE, size="scriptsize", warning=FALSE, message=FALSE>>=
+<<eval=TRUE, size="scriptsize", warning=FALSE, message=FALSE>>=
 riemann.sums <- function(fnct,                        # function to integrate
                          a,                           # lower bound of integral
                          b,                           # upper bound of integral
@@ -97,14 +97,21 @@ riemann.sums <- function(fnct,                        # function to integrate
   ######################################
   # Compute Area
   ######################################
+  left.points <- a + 0:99*(delta.x)
+  (left.area <- sum(delta.x*(integrand(left.points))))
+  
+  right.points <- a + 1:100*(delta.x)
+  (right.area <- sum(delta.x*(integrand(right.points))))
+  
   if(method == "Left"){
-    # Add necessary code here
+    (area = left.area)
   }else if(method == "Right"){
-    # Add necessary code here
+    (area = right.area)
   }else if(method == "Midpoint"){
-    # Add necessary code here
+    mid.points <- (left.points+right.points)/2
+    (area <- sum(delta.x*(integrand(mid.points))))
   }else if(method == "Trapezoidial"){
-    # Add necessary code here
+    (area =  0.5 * (right.area + left.area))
   }else{
     stop("Please select a valid method (e.g., 'Left', 'Right', 'Midpoint', 'Trapezoidial')")
   }
@@ -126,6 +133,8 @@ riemann.sums(fnct = integrand,
 integrate(f = integrand, # integrate() is an R function
           lower = 0,     # that completes numerical
           upper = 2)     # integration
+
+
 @
 \end{enumerate}
 \end{enumerate}
